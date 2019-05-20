@@ -1,0 +1,17 @@
+  div.body-component{
+      margin-left: 10%;
+      margin-right: 10%;
+  }
+  
+  .corporative-brand.title-company {
+      position: absolute;
+      margin-left: 45%;      
+  }
+
+  .corporativebar {
+    height: 40px;
+  }
+
+  .navbar {
+    height: 40px;
+  }

@@ -1,0 +1,36 @@
+<mat-card class="register-card custom-card" *ngIf="pubKey == null">
+    <mat-card-header>
+        <mat-card-title>Register</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form class="register-form">
+            <mat-form-field class="full-width">
+                <input matInput placeholder="Name">
+            </mat-form-field>
+            <mat-form-field class="full-width">
+                <input matInput placeholder="DNI">
+            </mat-form-field>
+        </form>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="getPubKey()">SEND</button>
+    </mat-card-actions>
+</mat-card>
+
+
+<mat-card class="response-card custom-card" *ngIf="pubKey">
+    <mat-card-header>
+        <mat-card-title></mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div>
+            <strong>
+                RSA:
+            </strong>
+            {{pubKey}}
+        </div>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button color="warn" (click)="clearPubKey()">CLEAR</button>
+    </mat-card-actions>
+</mat-card>

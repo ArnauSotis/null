@@ -1,0 +1,18 @@
+.candidates-card{
+    min-width: 150px;
+    max-width: 500px;
+    width: 150%;
+    
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 10%;
+  }
+
+  form.candidates-list {
+    padding-left: 5%;
+}
+
+  .candidate-button{
+    margin-left: 5%;
+    margin-right: 5%;
+}

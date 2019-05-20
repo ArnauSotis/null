@@ -1,0 +1,38 @@
+<mat-card class="candidates-card custom-card" *ngIf="!sendedVote">
+    <mat-card-header>
+        <mat-card-title>Papeleta</mat-card-title>
+        <mat-card-subtitle>Selecciona un candidato a votar:</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <form class="candidates-list">
+            <span *ngFor="let candidate of candidates">
+                <p>
+                    <!--<mat-checkbox [checked]="candidate.checked" (click)="updateSelection(candidate)">-->
+                    <mat-checkbox>
+                        {{candidate.name}}
+                    </mat-checkbox>
+                </p>
+            </span>
+        </form>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="sendVote()">SEND</button>
+    </mat-card-actions>
+</mat-card>
+
+
+<mat-card class="response-card custom-card" *ngIf="sendedVote">
+    <mat-card-header>
+        <mat-card-title></mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div>
+            <strong>
+                Voto enviado
+            </strong>
+        </div>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button color="warn" (click)="void()">CLEAR</button>
+    </mat-card-actions>
+</mat-card>
