@@ -1,24 +1,24 @@
-<mat-card class="register-card custom-card" *ngIf="pubKey == null">
+<mat-card class="register-card custom-card" *ngIf="infoSended == false">
     <mat-card-header>
         <mat-card-title>Register</mat-card-title>
     </mat-card-header>
     <mat-card-content>
         <form class="register-form">
             <mat-form-field class="full-width">
-                <input matInput placeholder="Name">
+                <input matInput placeholder="Username" #username> 
             </mat-form-field>
             <mat-form-field class="full-width">
-                <input matInput placeholder="DNI">
+                <input matInput placeholder="DNI" #dni>
             </mat-form-field>
         </form>
     </mat-card-content>
     <mat-card-actions>
-        <button mat-raised-button color="primary" (click)="getPubKey()">SEND</button>
+        <button mat-raised-button color="primary" (click)="send(username.value, dni.value)">SEND</button>
     </mat-card-actions>
 </mat-card>
 
 
-<mat-card class="response-card custom-card" *ngIf="pubKey">
+<mat-card class="response-card custom-card" *ngIf="infoSended">
     <mat-card-header>
         <mat-card-title></mat-card-title>
     </mat-card-header>
@@ -27,10 +27,10 @@
             <strong>
                 RSA:
             </strong>
-            {{pubKey}}
+            {{this.user.blindedPubKey}}
         </div>
     </mat-card-content>
     <mat-card-actions>
-        <button mat-raised-button color="warn" (click)="clearPubKey()">CLEAR</button>
+        <button mat-raised-button color="warn" (click)="reset()">CLEAR</button>
     </mat-card-actions>
 </mat-card>

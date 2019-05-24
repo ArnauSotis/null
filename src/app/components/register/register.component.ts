@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CensoService } from '../../services/censo.service';
 import { RSAService } from '../../services/rsa.service';
+import { User, PubKey } from '../../models/user';
 
 @Component({
   selector: 'register',
@@ -10,21 +11,41 @@ import { RSAService } from '../../services/rsa.service';
 
 export class Register {
 
-  pubKey: Number;
+  infoSended: Boolean;
+  user: User;
+  username: string;
+  dni: string;
 
   constructor(private censoService: CensoService, private rsaService: RSAService) {
-    this.pubKey = null;
+    this.infoSended = false;
   };
 
-  private getPubKey() {
+  private send(username, dni) {
+
+    this.username = username;
+    this.dni = dni;
+    var byteNameArray = this.stringToAscii(this.username);
+    var byteDniArray = this.stringToAscii(this.dni);
+
+    this.user = new User(byteNameArray, byteDniArray, new PubKey(this.rsaService.e, this.rsaService.n) );
     
-    this.censoService.getPublicKey(3).subscribe(response => {
-      this.pubKey = response['blindedPublicKey'];
-      console.log(JSON.stringify(response));
+    this.censoService.getVoterId(3, this.user).subscribe(response => {
+      this.user.blindedPubKey = response['blinded_pub_key'];
+      alert(JSON.stringify(response));
     });
+  }
+
+  private reset() {
+    this.infoSended = null;
   };
 
-  private clearPubKey() {
-    this.pubKey = null;
-  };
+  private stringToAscii(m:string){
+    var newMessage = ""
+    for (let index = 0; index < m.length; index++) {
+      const element = m[index];
+      var ascii = element.charCodeAt(0);   
+      newMessage += ascii.toString();
+    }
+    return newMessage;
+  }
 }
