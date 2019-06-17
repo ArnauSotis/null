@@ -17,7 +17,9 @@ import { Register } from './components/register/register.component';
 import { Urna } from './components/urna/urna.component';
 
 import { CensoService } from './services/censo.service';
+import { UrnaService } from './services/urna.service';
 import { RSAService } from './services/rsa.service';
+import { PaillierService } from './services/paillier.service';
 import { EnvironmentHelper } from '../environments/environment';
 
 /*Fake Backend*/
@@ -43,7 +45,9 @@ import {InMemoryDataService} from'./in-memory-data.service';
   ],
   providers: [
     CensoService,
+    UrnaService,
     RSAService,
+    PaillierService,
     EnvironmentHelper
   ],
   bootstrap: [AppNavbar]

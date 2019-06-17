@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CensoService } from '../../services/censo.service';
 import { RSAService } from '../../services/rsa.service';
-import { User, PubKey } from '../../models/user';
+import { User, PubKey, PrivKey } from '../../models/user';
 
 @Component({
   selector: 'register',
@@ -24,14 +24,15 @@ export class Register {
 
     this.username = username;
     this.dni = dni;
-    var byteNameArray = this.stringToAscii(this.username);
-    var byteDniArray = this.stringToAscii(this.dni);
+    var pubKey = new PubKey(this.rsaService.e, this.rsaService.n);
+    var privKey = new PrivKey(this.rsaService.e, this.rsaService.n);
 
-    this.user = new User(byteNameArray, byteDniArray, new PubKey(this.rsaService.e, this.rsaService.n) );
-    
+    this.user = new User(username, dni, pubKey, privKey);
+    this.user.blindedPubKey = String(this.rsaService.blind("public_key"));
+
     this.censoService.getVoterId(3, this.user).subscribe(response => {
-      this.user.blindedPubKey = response['blinded_pub_key'];
-      alert(JSON.stringify(response));
+      this.user.voterId = response['voter_id'];
+      this.infoSended = true;
     });
   }
 

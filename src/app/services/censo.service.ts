@@ -23,7 +23,7 @@ export class CensoService {
 
     // return signed_blinded_key
     getVoterId(electionIdentifier: Number, user: User): Observable<String> {
-        return this.http.post<String>(`this.censoUrls.getVoterId/${electionIdentifier}`, JSON.stringify(user), { headers: this.headers });
+        return this.http.post<String>(`${this.censoUrls.getVoterId}/${electionIdentifier}`, JSON.stringify(user), { headers: this.headers });
     }
 
     // return blinded_pub_key
@@ -31,4 +31,3 @@ export class CensoService {
         return this.http.post<String>(this.censoUrls.getSignedBlindKey, JSON.stringify(user), { headers: this.headers });
     }
 }
-

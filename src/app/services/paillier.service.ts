@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
+import * as PaillierCryptoUtils from 'paillier-bigint';
 import * as BigIntCryptoUtils from 'bigint-crypto-utils';
 
 @Injectable()
-export class RSAService {
+export class PaillierService {
 
     private _publicExponent: Number = 65537;
+    private paillierCryptoUtils: PaillierCryptoUtils;
     private bigIntCryptoUtils: BigIntCryptoUtils;
 
     n: any;
@@ -16,6 +18,7 @@ export class RSAService {
     r: any;
 
     constructor() {
+        this.paillierCryptoUtils = PaillierCryptoUtils;
         this.bigIntCryptoUtils = BigIntCryptoUtils;
         this.generateKeys();
     }
@@ -29,11 +32,11 @@ export class RSAService {
     };
 
     encrypt(m) {
-        return this.bigIntCryptoUtils.modPow(m, this.e, this.n)
+        return this.e.encrypt(m);
     };
 
     decrypt(k) {
-        return this.bigIntCryptoUtils.modPow(k, this.d, this.n)
+        return this.d.decrypt(k)
     };
 
     blind(m){
@@ -50,28 +53,10 @@ export class RSAService {
         var unblinded_msg = s * this.bigIntCryptoUtils.modInv(this.r, this.n) % this.n
         return unblinded_msg;
     }
-    private async generateKeys() {
-        var firstPrime = await this.bigIntCryptoUtils.prime(2048);
-        var secondPrime = await this.bigIntCryptoUtils.prime(2048);
-        var firstIsPrime = await this.bigIntCryptoUtils.isProbablyPrime(firstPrime);
-        var secondIsPrime = await this.bigIntCryptoUtils.isProbablyPrime(secondPrime);
-
-        if (firstIsPrime && secondIsPrime) {
-            var publicModulus = firstPrime * secondPrime;
-            firstPrime--;
-            secondPrime--;
-            var totient = firstPrime * secondPrime;
-            var privateExponent = this.bigIntCryptoUtils.modInv(this._publicExponent, totient)
-
-            this.loadKeys(publicModulus, this._publicExponent, privateExponent);
-        }
-    };
-
-    private loadKeys(n: Number, e: Number, d: Number) {
-
-        this.n = n;
-        this.e = e;
-        this.d = d;
-    };
+    private generateKeys() {
+        var paillierResponse = this.paillierCryptoUtils.generateRandomKeys(3072);
+        this.e = paillierResponse['publicKey'];
+        this.d = paillierResponse['privateKey'];
+    };   
 }
 

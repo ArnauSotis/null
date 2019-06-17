@@ -3,25 +3,25 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {  
-  production: false,
-  developer: true
+  production: true,
+  developer: false
 };
 
 export class EnvironmentHelper {
 
-  readonly urlbase: string = environment.developer ? 'api' : 'http://147.83.7.156:3001';
-  
-  public readonly censoDictionary = {
-    getPublicKey: `${this.urlbase}/censoPubkey`,
-    postVoterId: `${this.urlbase}/censoGet_voter_id`,    
-    postGetSignedBlindKey: `${this.urlbase}/censoGet_signed_blind_key`,
+  readonly urlbase: string = environment.developer ? 'api' : 'http://localhost:5000';
+
+public readonly censoDictionary = {
+    getPublicKey: `${this.urlbase}/pubkey`,
+    postVoterId: `${this.urlbase}/get_voter_id`,    
+    postGetSignedBlindKey: `${this.urlbase}/get_signed_blind_key`,
 
   };
 
   private readonly urnaDictionary = {
-    //getEncryptedVotes: `${this.urlbase}/urnaEncrypted_votes`,
-    //getEncryptedTally: `${this.urlbase}/unraEncrypted_tally`,
-    sendVote: `${this.urlbase}/urnaVoto`
+    getEncryptedVotes: `${this.urlbase}/encrypted_votes`,
+    getEncryptedTally: `${this.urlbase}/encrypted_tally`,
+    sendVote: `${this.urlbase}/votar`
   };
 
   public readonly urls = {
@@ -29,25 +29,3 @@ export class EnvironmentHelper {
     urna : this.urnaDictionary
   }
 }
-
-// PROD
-/*
-
-public readonly censoDictionary = {
-    getPublicKey: `${this.urlbase}/censo/pubkey`,
-    postVoterId: `${this.urlbase}/censo/get_voter_id`,    
-    postGetSignedBlindKey: `${this.urlbase}/censo/get_signed_blind_key`,
-
-  };
-
-  private readonly urnaDictionary = {
-    getEncryptedVotes: `${this.urlbase}/urna/encrypted_votes`,
-    getEncryptedTally: `${this.urlbase}/unra/encrypted_tally`,
-    postVoto: `${this.urlbase}/urna/voto`
-  };
-
-  public readonly urls = {
-    censo: this.censoDictionary,
-    urna : this.urnaDictionary
-  }
-  */

@@ -16,15 +16,9 @@ export class UrnaService {
         this.urnaUrls = envHelper.urls.urna;
     }
 
-    // return signed_blinded_key
     sendVote(user: User): Observable<String> {
         return this.http.post<String>(this.urnaUrls.sendVote, JSON.stringify(user), { headers: this.headers });
     }
-/*
-    // return blinded_pub_key
-    getSignedBlindKey(user: User): Observable<String> {
-        return this.http.post<String>(this.urnaUrls.getSignedBlindKey, JSON.stringify(user), { headers: this.headers });
-    }
-*/
+
 }
 

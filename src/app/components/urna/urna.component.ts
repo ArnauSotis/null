@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { UrnaService } from '../../services/urna.service';
-import { User } from 'src/app/models/user';
-
+import { PaillierService } from '../../services/paillier.service';
+import { User, PubKey, PrivKey } from '../../models/user';
 
 @Component({
   selector: 'urna',
@@ -12,34 +12,28 @@ import { User } from 'src/app/models/user';
 export class Urna {
 
   candidates = [
-    { name: "Candidato 1", checked: false },
-    { name: "Candidato 2", checked: false },
-    { name: "Candidato 3", checked: false },
+    { name: "Candidato 1" },
+    { name: "Candidato 2" },
+    { name: "Candidato 3" }
   ];
-  
+
   sendedVote: Boolean;
-  constructor() {
+  user:User;
+
+  constructor(private urnaService: UrnaService, private paillierService: PaillierService){//, private paillierService: PaillierService) {
     this.sendedVote = false;
   };
 
-/*
-  private updateSelection = function(selectedCandidate) {
-    this.candidates.forEach(item => {
-        if (item.name != selectedCandidate.name)
-            item.checked = false;
-        }
-    );
-};
 
-*/
-  private sendVote() {
-    this.sendedVote = true;
-    /*
-    this.UrnaService.sendVote(new User("a","a")).subscribe(response => {
-      this.pubKey = response['blindedPublicKey'];     
-      console.log(JSON.stringify(response));
+  private sendVote(candidate: String) {
+    var foo = this.paillierService;
+
+    this.urnaService.sendVote(this.user).subscribe(response => {
+      var message = response['message'];
+      var payload = response['payload'];
+      this.sendedVote = true;
     });
-    */
+
   };
 
 }
