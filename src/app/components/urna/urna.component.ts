@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { UrnaService } from '../../services/urna.service';
 import { PaillierService } from '../../services/paillier.service';
 import { VotoUrna, FirmaVotante, Voto } from '../../models/votoUrna';
+import { sha256 } from 'js-sha256';
 
 @Component({
   selector: 'urna',
@@ -18,22 +19,30 @@ export class Urna {
   ];
 
   sendedVote: Boolean;
-  publicSignedCensoKey: String;
   selectedCandidate:string;
+
+  publicSignedCensoKey: String;
+  publicKeyVotante: String;
 
   constructor(private urnaService: UrnaService, private paillierService: PaillierService){
     this.sendedVote = false;
-    //Hay que recuperarla de un Endpoint!
-    this.publicSignedCensoKey = "1234"
     this.selectedCandidate = "";
+
+    //Es el id random que te has generado, una vez firmada por el censo y descegada por ti (RSA)
+    this.publicSignedCensoKey = "1611611616"
+    //id random que te has generado (RSA)
+    this.publicKeyVotante = "123123"
+
   };
 
 
   private sendVote() {
 
-    var firmaVotante = new FirmaVotante(this.publicSignedCensoKey, this.paillierService.publicKey);
+    var firmaVotante = new FirmaVotante(this.publicSignedCensoKey, this.publicKeyVotante);
     var m = parseInt(this.stringToAscii(this.selectedCandidate));
-    var voto = new Voto(this.paillierService.encrypt(m), this.paillierService.sign(m));
+    var encryptedVote = this.paillierService.encrypt(m).toString();
+    var hasEncryptedVote = sha256(encryptedVote);
+    var voto = new Voto(encryptedVote, hasEncryptedVote);
     var votoUrna = new VotoUrna(firmaVotante, voto);
     
     this.urnaService.sendVote(votoUrna).subscribe(response => {

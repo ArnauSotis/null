@@ -9,12 +9,12 @@ export class VotoUrna {
 }
 
 export class FirmaVotante {
-    k_pub_firmada_censo: Object;
-    k_pub_votante: publicKeyVotantePaillier;
+    k_pub_firmada_censo: String;
+    k_pub_votante: String;
 
     constructor(k_pub_firmada_censo, k_pub_votante) {
         this.k_pub_firmada_censo = k_pub_firmada_censo;
-        this.k_pub_votante = new publicKeyVotantePaillier(k_pub_votante.g, k_pub_votante.n, k_pub_votante._n2);
+        this.k_pub_votante = k_pub_votante;
     }
 }
 
@@ -28,6 +28,7 @@ export class Voto {
     }
 }
 
+/*
 class publicKeyVotantePaillier {
     g:String;
     n:String;
@@ -39,3 +40,4 @@ class publicKeyVotantePaillier {
         this._n2 = _n2.toString()
     }
 }
+*/
