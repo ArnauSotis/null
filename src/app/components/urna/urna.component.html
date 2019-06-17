@@ -5,8 +5,8 @@
     </mat-card-header>
     <mat-card-content>
         <form class="candidates-list">
-            <mat-radio-group>
-                <mat-radio-button *ngFor="let candidate of candidates; index as i" [value]="candidate.name">
+            <mat-radio-group [(ngModel)]="selectedCandidate"  name="candidateOption">
+            <mat-radio-button *ngFor="let candidate of candidates; index as i" [value]="candidate.name">
                     {{candidate.name}}
                 </mat-radio-button>
             </mat-radio-group>
@@ -30,6 +30,6 @@
         </div>
     </mat-card-content>
     <mat-card-actions>
-        <button mat-raised-button color="warn" (click)="void()">CLEAR</button>
+        <button mat-raised-button disabled color="warn" (click)="void()">CLEAR</button>
     </mat-card-actions>
 </mat-card>

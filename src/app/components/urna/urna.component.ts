@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { UrnaService } from '../../services/urna.service';
 import { PaillierService } from '../../services/paillier.service';
-import { User, PubKey, PrivKey } from '../../models/user';
+import { VotoUrna, FirmaVotante, Voto } from '../../models/votoUrna';
 
 @Component({
   selector: 'urna',
@@ -18,22 +18,42 @@ export class Urna {
   ];
 
   sendedVote: Boolean;
-  user:User;
+  publicSignedCensoKey: String;
+  selectedCandidate:string;
 
-  constructor(private urnaService: UrnaService, private paillierService: PaillierService){//, private paillierService: PaillierService) {
+  constructor(private urnaService: UrnaService, private paillierService: PaillierService){
     this.sendedVote = false;
+    //Hay que recuperarla de un Endpoint!
+    this.publicSignedCensoKey = "1234"
+    this.selectedCandidate = "";
   };
 
 
-  private sendVote(candidate: String) {
-    var foo = this.paillierService;
+  private sendVote() {
 
-    this.urnaService.sendVote(this.user).subscribe(response => {
+    var firmaVotante = new FirmaVotante(this.publicSignedCensoKey, this.paillierService.publicKey);
+    var m = parseInt(this.stringToAscii(this.selectedCandidate));
+    var voto = new Voto(this.paillierService.encrypt(m), this.paillierService.sign(m));
+    var votoUrna = new VotoUrna(firmaVotante, voto);
+    
+    this.urnaService.sendVote(votoUrna).subscribe(response => {
       var message = response['message'];
       var payload = response['payload'];
       this.sendedVote = true;
     });
 
+    this.sendedVote = true;
+
   };
+
+  private stringToAscii(m:string){
+    var newMessage = ""
+    for (let index = 0; index < m.length; index++) {
+      const element = m[index];
+      var ascii = element.charCodeAt(0);   
+      newMessage += ascii.toString();
+    }
+    return newMessage;
+  }
 
 }

@@ -3,7 +3,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 
-import { User } from '../models/user';
+import { VotoUrna } from '../models/votoUrna';
 import { EnvironmentHelper } from '../../environments/environment';
 
 @Injectable()
@@ -16,9 +16,8 @@ export class UrnaService {
         this.urnaUrls = envHelper.urls.urna;
     }
 
-    sendVote(user: User): Observable<String> {
-        return this.http.post<String>(this.urnaUrls.sendVote, JSON.stringify(user), { headers: this.headers });
+    sendVote(votoUrna: VotoUrna): Observable<String> {
+        return this.http.post<String>(this.urnaUrls.sendVote, JSON.stringify(votoUrna), { headers: this.headers });
     }
-
 }
 

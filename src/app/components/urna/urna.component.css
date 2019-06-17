@@ -26,3 +26,9 @@ mat-radio-group.mat-radio-group {
 mat-radio-button {
   margin: 5px;
 }
+
+.custom-card{
+  margin-left: 20%;
+  margin-right: 20%;
+  margin-top: 10%;
+}
