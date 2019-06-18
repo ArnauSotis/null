@@ -17,7 +17,7 @@ export class PaillierService {
 
     constructor() {
         this.paillierCryptoUtils = PaillierCryptoUtils;
-        this.generateKeys(this.n, this.g);
+        //this.generateKeys(this.n, this.g);
     }
 
     sign(m) {
@@ -45,7 +45,7 @@ export class PaillierService {
     }
 
 
-    private generateKeys(n, g) {
+    generateKeys(n, g) {
         
         this.publicKey = new this.paillierCryptoUtils.PublicKey(n, g)
         //this.privateKey = ??
