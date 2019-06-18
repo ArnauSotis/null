@@ -31,11 +31,8 @@ export class Urna {
     this.sendedVote = false;
     this.credentials = false;
     this.selectedCandidate = "";
-
-    //Es el id random que te has generado, una vez firmada por el censo y descegada por ti (RSA)
-    this.publicSignedCensoKey = "1611611616"
-    //id random que te has generado (RSA)
-    this.publicKeyVotante = "123123"
+    this.publicSignedCensoKey = ""
+    this.publicKeyVotante = ""
 
   };
 
@@ -43,7 +40,7 @@ export class Urna {
     if (!(n.length > 0 && g.length > 0 && pubKeyRSA.length > 0 && voterId.length > 0)) {
       return;
     }
-    
+
     this.publicSignedCensoKey = voterId;
     this.publicKeyVotante = pubKeyRSA;
 

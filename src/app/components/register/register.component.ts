@@ -15,12 +15,38 @@ export class Register {
   user: User;
   username: string;
   dni: string;
+  electionsToRequest: any;
 
   constructor(private censoService: CensoService, private rsaService: RSAService) {
     this.infoSended = false;
+    var electionsResponse = {
+      "elections": [
+        {
+          "id": 1,
+          "name": "Elecciones a Cortes Generales 2019"
+        },
+        {
+          "id": 2,
+          "name": "Elecciones Municipales 2019"
+        },
+        {
+          "id": 3,
+          "name": "Eleccions Rectorat UPC"
+        }
+      ]
+    };
+
+    this.electionsToRequest = electionsResponse["elections"];
   };
 
-  private send(username, dni) {
+  private send(username, dni, selectedElection) {
+
+    var selectedElectionId = 0;
+    this.electionsToRequest.forEach(election => {
+      if(election.name == selectedElection){
+        selectedElectionId = parseInt(election.id);
+      }
+    });
 
     this.username = username;
     this.dni = dni;
@@ -30,7 +56,7 @@ export class Register {
     this.user = new User(username, dni, pubKey, privKey);
     this.user.blindedPubKey = String(this.rsaService.blind("public_key"));
 
-    this.censoService.getVoterId(3, this.user).subscribe(response => {
+    this.censoService.getVoterId(selectedElectionId, this.user).subscribe(response => {
       this.user.voterId = response['voter_id'];
       this.infoSended = true;
     });
@@ -40,11 +66,11 @@ export class Register {
     this.infoSended = null;
   };
 
-  private stringToAscii(m:string){
+  private stringToAscii(m: string) {
     var newMessage = ""
     for (let index = 0; index < m.length; index++) {
       const element = m[index];
-      var ascii = element.charCodeAt(0);   
+      var ascii = element.charCodeAt(0);
       newMessage += ascii.toString();
     }
     return newMessage;

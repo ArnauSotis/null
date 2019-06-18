@@ -3,9 +3,16 @@
         <mat-card-title>Register</mat-card-title>
     </mat-card-header>
     <mat-card-content>
+        <mat-form-field>
+            <mat-label>Elige una elección a participar</mat-label>
+            <select matNativeControl required #selectedElection>
+                <option *ngFor="let election of electionsToRequest" value="{{election.id}}">{{election.name}}</option>
+            </select>
+        </mat-form-field>
+
         <form class="register-form">
             <mat-form-field class="full-width">
-                <input matInput placeholder="Username" #username> 
+                <input matInput placeholder="Username" #username>
             </mat-form-field>
             <mat-form-field class="full-width">
                 <input matInput placeholder="DNI" #dni>
@@ -13,7 +20,8 @@
         </form>
     </mat-card-content>
     <mat-card-actions>
-        <button mat-raised-button color="primary" (click)="send(username.value, dni.value)">SEND</button>
+        <button mat-raised-button color="primary"
+            (click)="send(username.value, dni.value, selectedElection.value)">SEND</button>
     </mat-card-actions>
 </mat-card>
 
@@ -25,10 +33,20 @@
     <mat-card-content>
         <div>
             <strong>
-                RSA:
+                Voter Id
             </strong>
             {{this.user.voterId}}
         </div>
+        <br/>
+        <div>
+            <strong>
+                Public Key
+            </strong>
+            e: {{this.user.pubKey.e}}
+            <br/>
+            n: {{this.user.pubKey.n}}
+        </div>
+
     </mat-card-content>
     <mat-card-actions>
         <button mat-raised-button color="warn" (click)="reset()">CLEAR</button>
