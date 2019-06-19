@@ -37,13 +37,15 @@ export class RSAService {
     };
 
     blind(m){
-        if(this.r = null){
-            this.bigIntCryptoUtils.randBetween(this.bigIntCryptoUtils.BigInt(2) ** this.bigIntCryptoUtils.BigInt(256));
+        if(this.r == null){
+            this.r = this.bigIntCryptoUtils.randBetween(BigInt(2) ** BigInt(256));
         }
         var b = this.bigIntCryptoUtils.modPow(this.r, this.e, this.n);
-        var blinded_msg = m*b % this.n;
+       //var blinded_msg = m*b % this.n;
+       //Este % this.n no lo veo por ningún lado en el ppt, es m*b
+       var blinded_msg = m*b;
 
-        return blinded_msg;
+        return String(blinded_msg);
     }
 
     unblind(s){

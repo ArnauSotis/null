@@ -41,7 +41,8 @@ export class Register {
 
   private send(username,pass, selectedElection) {
 
-    var selectedElectionId = 0;
+    //He puesto un 1 porque salía 0, se puede volver a poner 0.
+    var selectedElectionId = 1;
     this.electionsToRequest.forEach(election => {
       if(election.name == selectedElection){
         selectedElectionId = parseInt(election.id);
@@ -51,10 +52,15 @@ export class Register {
     this.username = username;
     this.pass = pass;
     var pubKey = new PubKey(this.rsaService.e, this.rsaService.n);
-    var privKey = new PrivKey(this.rsaService.e, this.rsaService.n);
+    var privKey = new PrivKey(this.rsaService.d, this.rsaService.n);
 
     this.user = new User(username, pass, pubKey, privKey);
-    this.user.blindedPubKey = String(this.rsaService.blind("public_key"));
+    this.user.blindedPubKey = String(this.rsaService.blind(pubKey.n));
+   // var blindedPubKey = String(this.rsaService.blind(pubKey.n));
+   // pubKey.e = String(pubKey.e);
+   // pubKey.n = String(pubKey.n);
+   // this.user.blindedPubKey = blindedPubKey;
+
 
     this.censoService.getVoterId(selectedElectionId, this.user).subscribe(response => {
       this.user.voterId = response['voter_id'];

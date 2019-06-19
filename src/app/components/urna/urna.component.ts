@@ -46,7 +46,7 @@ export class Urna {
 
     this.paillierService.n = n;
 
-    this.paillierService.generateKeys(n, n+1);
+    this.paillierService.generateKeys(Number(n), Number(n)+1);
 
 
     this.credentials = true;
