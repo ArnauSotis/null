@@ -22,7 +22,7 @@ export class CensoService {
     }
 
     // return signed_blinded_key
-    getVoterId(electionIdentifier: Number, user: User): Observable<String> {
+    getVoterId(electionIdentifier: Number, user: User): Observable<any> {
         return this.http.post<String>(`${this.censoUrls.postVoterId}/${electionIdentifier}`, JSON.stringify(user), { headers: this.headers });
     }
 
