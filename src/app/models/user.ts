@@ -7,11 +7,12 @@ export class User {
     blindedPubKey: String;
     voterId: String
   
-    constructor(username: String, password: String, pubKey: PubKey, privKey: PrivKey) {
+    constructor(username: String, password: String, pubKey: PubKey, privKey: PrivKey, blindedPubKey) {
       this.username = username;
       this.password = password;
       this.pubKey = pubKey;
       this.privKey = privKey;
+      this.blindedPubKey = blindedPubKey;
     }
   }
 
