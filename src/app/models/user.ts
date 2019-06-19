@@ -16,12 +16,12 @@ export class User {
   }
 
   export class PubKey {
-    e:string;
-    n:string;
+    e:any;
+    n:any;
 
     constructor(e, n) {
-      this.e = String(e);
-      this.n = String(n);
+      this.e = e;
+      this.n = n;
     }
   }
 

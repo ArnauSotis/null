@@ -53,8 +53,12 @@ export class Register {
     var pubKey = new PubKey(this.rsaService.e, this.rsaService.n);
     var privKey = new PrivKey(this.rsaService.e, this.rsaService.n);
 
+    var blindedPubKey = String(this.rsaService.blind(pubKey.n));
+    pubKey.e = String(pubKey.e);
+    pubKey.n = String(pubKey.n);
     this.user = new User(username, dni, pubKey, privKey);
-    this.user.blindedPubKey = String(this.rsaService.blind("public_key"));
+    this.user.blindedPubKey = blindedPubKey;
+
 
     this.censoService.getVoterId(selectedElectionId, this.user).subscribe(response => {
       this.user.voterId = response['voter_id'];
