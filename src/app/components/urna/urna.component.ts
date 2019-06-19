@@ -25,30 +25,30 @@ export class Urna {
   selectedCandidate: string;
 
   publicSignedCensoKey: String;
-  publicKeyVotante: String;
+  publicKeyVotante: any;
 
   constructor(private urnaService: UrnaService, private paillierService: PaillierService) {
     this.sendedVote = false;
     this.credentials = false;
     this.selectedCandidate = "";
-    this.publicSignedCensoKey = ""
-    this.publicKeyVotante = ""
+    this.publicSignedCensoKey = "";
+    this.publicKeyVotante = {};
 
   };
 
-  private sendPublicKeyPaillier(n, pubKeyRSA, voterId) {
-    if (!(n.length > 0 && pubKeyRSA.length > 0 && voterId.length > 0)) {
+  private sendPublicKeyPaillier(n, pubKeyRSAN, pubKeyRSAE, voterId) {
+    if (!(n.length > 0 && pubKeyRSAN.length > 0 && voterId.length > 0)) {
       return;
     }
 
     this.publicSignedCensoKey = voterId;
-    this.publicKeyVotante = pubKeyRSA;
+    this.publicKeyVotante = {"n": pubKeyRSAN, "e": pubKeyRSAE};
 
     this.paillierService.n = n;
 
     this.paillierService.generateKeys(n, n+1);
 
-    
+
     this.credentials = true;
   }
 

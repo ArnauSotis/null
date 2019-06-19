@@ -58,6 +58,7 @@ export class Register {
 
     this.censoService.getVoterId(selectedElectionId, this.user).subscribe(response => {
       this.user.voterId = response['voter_id'];
+      this.user.voterId =this.rsaService.unblind(this.user.voterId).toString();
       this.infoSended = true;
     });
   }
