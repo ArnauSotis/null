@@ -36,19 +36,19 @@ export class Urna {
 
   };
 
-  private sendPublicKeyPaillier(n, n2, g, pubKeyRSA, voterId) {
-    if (!(n.length > 0 && g.length > 0 && pubKeyRSA.length > 0 && voterId.length > 0)) {
+  private sendPublicKeyPaillier(n, pubKeyRSA, voterId) {
+    if (!(n.length > 0 && pubKeyRSA.length > 0 && voterId.length > 0)) {
       return;
     }
 
     this.publicSignedCensoKey = voterId;
     this.publicKeyVotante = pubKeyRSA;
 
-    this.paillierService.g = g;
     this.paillierService.n = n;
 
-    this.paillierService.generateKeys(n, g);
+    this.paillierService.generateKeys(n, n+1);
 
+    
     this.credentials = true;
   }
 

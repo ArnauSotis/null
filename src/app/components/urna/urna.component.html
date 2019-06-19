@@ -29,16 +29,6 @@
                     <input matInput placeholder="n" value="" #n>
                 </mat-form-field>
             </mat-card-actions>
-            <mat-card-actions>
-                <mat-form-field class="example-full-width">
-                    <input matInput placeholder="n2" value="" #n2>
-                </mat-form-field>
-            </mat-card-actions>
-            <mat-card-actions>
-                <mat-form-field class="example-full-width">
-                    <input matInput placeholder="g" value="" #g>
-                </mat-form-field>
-            </mat-card-actions>
         </div>
         <div>
             <mat-card-subtitle>Añade las credenciales personales</mat-card-subtitle>
@@ -54,7 +44,7 @@
                 </mat-form-field>
             </mat-card-actions>
         </div>
-        <button mat-raised-button color="primary" (click)="sendPublicKeyPaillier(n.value, n2.value, g.value, pubKeyRSA.value, voterId.value)">ACCESS</button>        
+        <button mat-raised-button color="primary" (click)="sendPublicKeyPaillier(n.value, pubKeyRSA.value, voterId.value)">ACCESS</button>        
     </form>
 </mat-card>
 

@@ -14,7 +14,7 @@ export class Register {
   infoSended: Boolean;
   user: User;
   username: string;
-  dni: string;
+  pass: string;
   electionsToRequest: any;
 
   constructor(private censoService: CensoService, private rsaService: RSAService) {
@@ -39,7 +39,7 @@ export class Register {
     this.electionsToRequest = electionsResponse["elections"];
   };
 
-  private send(username, dni, selectedElection) {
+  private send(username,pass, selectedElection) {
 
     var selectedElectionId = 0;
     this.electionsToRequest.forEach(election => {
@@ -49,11 +49,11 @@ export class Register {
     });
 
     this.username = username;
-    this.dni = dni;
+    this.pass = pass;
     var pubKey = new PubKey(this.rsaService.e, this.rsaService.n);
     var privKey = new PrivKey(this.rsaService.e, this.rsaService.n);
 
-    this.user = new User(username, dni, pubKey, privKey);
+    this.user = new User(username, pass, pubKey, privKey);
     this.user.blindedPubKey = String(this.rsaService.blind("public_key"));
 
     this.censoService.getVoterId(selectedElectionId, this.user).subscribe(response => {
