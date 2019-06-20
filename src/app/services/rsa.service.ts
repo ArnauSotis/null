@@ -15,6 +15,8 @@ export class RSAService {
     //random number
     r: any;
 
+    voterId: any;
+
     constructor() {
         this.bigIntCryptoUtils = BigIntCryptoUtils;
         this.generateKeys();
@@ -36,21 +38,19 @@ export class RSAService {
         return this.bigIntCryptoUtils.modPow(k, this.d, this.n)
     };
 
-    blind(m){
-        if(this.r == null){
+    blind(m) {
+        if (this.r == null) {
             this.r = this.bigIntCryptoUtils.randBetween(BigInt(2) ** BigInt(256));
         }
         var b = this.bigIntCryptoUtils.modPow(this.r, this.e, this.n);
-      // var blinded_msg = m*b % this.n;
-       //Este % this.n no lo veo por ningún lado en el ppt, es m*b
-       var blinded_msg = m*b;
+        var blinded_msg = m * b;
 
         return String(blinded_msg);
     }
 
-    unblind(s){
-        //var unblinded_msg = s * this.bigIntCryptoUtils.modInv(this.r, this.n) % this.n
+    unblind(s) {
         var unblinded_msg = s * this.bigIntCryptoUtils.modInv(this.r, this.n)
+        this.voterId = unblinded_msg;
         return unblinded_msg;
     }
     private async generateKeys() {

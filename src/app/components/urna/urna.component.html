@@ -17,44 +17,6 @@
     </mat-card-actions>
 </mat-card>
 
-<mat-card class="Keys-card custom-card" *ngIf="!credentials && !sendedVote">
-    <mat-card-header>
-        <mat-card-title>Conexión PubKey</mat-card-title>
-    </mat-card-header>
-    <form class="example-form">
-        <div>
-            <mat-card-subtitle>Añade las credenciales de la mesa electoral</mat-card-subtitle>
-            <mat-card-actions>
-                <mat-form-field class="example-full-width">
-                    <input matInput placeholder="n" value="" #n>
-                </mat-form-field>
-            </mat-card-actions>
-        </div>
-        <div>
-            <mat-card-subtitle>Añade las credenciales personales</mat-card-subtitle>
-            <mat-card-actions>
-                <mat-form-field class="example-full-width">
-                    <input matInput placeholder="PubKey RSA N" value="" #pubKeyRSAN>
-                </mat-form-field>
-
-            </mat-card-actions>
-            <mat-card-actions>
-                <mat-form-field class="example-full-width">
-                    <input matInput placeholder="PubKey RSA E" value="" #pubKeyRSAE>
-                </mat-form-field>
-            </mat-card-actions>
-            
-
-            <mat-card-actions>
-                <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Voter Id" value="" #voterId>
-                </mat-form-field>
-            </mat-card-actions>
-        </div>
-        <button mat-raised-button color="primary" (click)="sendPublicKeyPaillier(n.value, pubKeyRSAN.value, pubKeyRSAE.value, voterId.value)">ACCESS</button>        
-    </form>
-</mat-card>
-
 <mat-card class="response-card custom-card" *ngIf="credentials && sendedVote">
     <mat-card-header>
         <mat-card-title></mat-card-title>

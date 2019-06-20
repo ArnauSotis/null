@@ -22,12 +22,8 @@ export class CensoService {
     }
 
     // return signed_blinded_key
-    getVoterId(electionIdentifier: Number, user: User): Observable<any> {
+    getVoterId(electionIdentifier: Number, user: User): Observable<String> {
         return this.http.post<String>(`${this.censoUrls.postVoterId}/${electionIdentifier}`, JSON.stringify(user), { headers: this.headers });
     }
 
-    // return blinded_pub_key
-    getSignedBlindKey(user: User): Observable<String> {
-        return this.http.post<String>(this.censoUrls.getSignedBlindKey, JSON.stringify(user), { headers: this.headers });
-    }
 }

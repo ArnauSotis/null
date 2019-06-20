@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CensoService } from '../../services/censo.service';
 import { RSAService } from '../../services/rsa.service';
-import { User, PubKey, PrivKey } from '../../models/user';
+import { User, PubKey } from '../../models/user';
 
 @Component({
   selector: 'register',
@@ -39,26 +39,20 @@ export class Register {
     this.electionsToRequest = electionsResponse["elections"];
   };
 
-  private send(username,pass, selectedElection) {
-
-    //He puesto un 1 porque salía 0, se puede volver a poner 0.
-  
+  private send(username, pass, selectedElection) {
 
     this.username = username;
     this.pass = pass;
     var pubKey = new PubKey(this.rsaService.e, this.rsaService.n);
-    var privKey = new PrivKey(this.rsaService.d, this.rsaService.n);
 
-     var blindedPubKey = String(this.rsaService.blind(pubKey.n));
-   // var blindedPubKey = String(this.rsaService.blind(pubKey.n));
+    var blindedPubKey = String(this.rsaService.blind(pubKey.n));
     pubKey.e = String(pubKey.e);
     pubKey.n = String(pubKey.n);
-   // this.user.blindedPubKey = blindedPubKey;
-   this.user = new User(username, pass, pubKey, privKey,blindedPubKey);
+    this.user = new User(username, pass, pubKey, blindedPubKey);
 
     this.censoService.getVoterId(selectedElection, this.user).subscribe(response => {
       this.user.voterId = response['voter_id'];
-      this.user.voterId =this.rsaService.unblind(this.user.voterId).toString();
+      this.user.voterId = this.rsaService.unblind(this.user.voterId).toString();
       this.infoSended = true;
     });
   }
